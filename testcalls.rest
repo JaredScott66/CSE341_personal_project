@@ -1,0 +1,21 @@
+### GET all call
+GET http://localhost:3000/users
+
+### GET user by ID
+GET http://localhost:3000/users/67dee6f0fdb4f1594bc1c737
+
+### Create contact
+POST http://localhost:3000/users HTTP/1.1
+content-Type: application/json
+
+{
+    "firstName": "Ashely",
+    "lastName": "Weaver",
+    "email": "com",
+    "favoriteColor": "Brown",
+    "birthday": "06-19-2000",
+    "admin": "false"
+}
+
+### Delete contact
+DELETE http://localhost:3000/users/67deeb8bf0b9d61a7cf3b290 HTTP/1.1
