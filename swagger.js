@@ -5,7 +5,7 @@ const doc = {
         title: 'Cargo registry API',
         description: 'A cargoship registering API for use on starbases'
     },
-    host: 'localhost:3000',
+    host: 'cse341-personal-project-zpvh.onrender.com',
     schemes: ['http', 'https'],
 };
 
