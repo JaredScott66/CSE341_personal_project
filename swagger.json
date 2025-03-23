@@ -5,7 +5,7 @@
     "description": "A cargoship registering API for use on starbases",
     "version": "1.0.0"
   },
-  "host": "cse341-personal-project-zpvh.onrender.com",
+  "host": "localhost:3000",
   "basePath": "/",
   "schemes": [
     "http"

@@ -2,7 +2,7 @@
 GET http://localhost:3000/users
 
 ### GET user by ID
-GET http://localhost:3000/users/67dee6f0fdb4f1594bc1c737
+GET http://localhost:3000/users/67dee6f0fdb4f1594bc1c737 HTTP/1.1
 
 ### Create contact
 POST http://localhost:3000/users HTTP/1.1

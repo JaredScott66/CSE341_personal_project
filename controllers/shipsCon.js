@@ -12,7 +12,7 @@ const getAll = async (req, res) => {
                 res.status(200).json(users);
             })
         } catch (error) {
-            console.error(error);
+            next(error)
         }
 };
 
@@ -28,7 +28,6 @@ const getById = async (req, res, next) => {
         });
     } catch (error) {
         next(error)
-        return error
     }
 };
 
@@ -50,7 +49,6 @@ const createShip = async (req, res, next) => {
          res.status(500).json(response.error || 'Some error occured while updating user.');
      };
     } catch (error) {
-        console.error(error)
         next(error)
     };
 }
@@ -74,7 +72,6 @@ const editShip = async (req, res, next) => {
          res.status(500).json(response.error || 'Some error occured while updating user.');
      };
     } catch (error) {
-        console.error(error)
         next(error)
     };
 }
@@ -90,7 +87,7 @@ const deleteShip = async (req, res) => {
         res.status(500).json(response.error || 'Some error occured while deleting the user')
     };
     } catch (error) {
-        console.error(error)
+        next(error);
     };
 };
 

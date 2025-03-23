@@ -16,8 +16,7 @@ const getAll = async (req, res, next) => {
                 throw new Api404Error('No user found')
             }
         } catch (error) {
-            errorTools.logError(error)
-            next()
+            next(error)
         }
 };
 
@@ -35,8 +34,7 @@ const getById = async (req, res, next) => {
             throw new Api404Error('No user found')
         }
     } catch (error) {
-        errorTools.logError(error)
-        next()
+        next(error)
     }
 };
 
@@ -81,7 +79,6 @@ const editUser = async (req, res, next) => {
          res.status(500).json(response.error || 'Some error occured while updating user.');
      };
     } catch (error) {
-        console.error(error)
         next(error);
     };
 }
@@ -91,13 +88,12 @@ const deleteUser = async (req, res, next) => {
     //#swagger.tags=['Users']
     const userId = new ObjectId(req.params.id);
     const response = await mongodb.getDatabase().db().collection('users').deleteOne({_id:userId});
-    if (response.deleteCount > 0) {
+    if (response.deletedCount > 0) {
         res.status(204).send();
     } else {
         res.status(500).json(response.error || 'Some error occured while deleting the user')
     };
     } catch (error) {
-        console.error(error)
         next(error)
     };
 };
