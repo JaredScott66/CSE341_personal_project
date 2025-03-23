@@ -11,7 +11,7 @@ content-Type: application/json
 {
     "firstName": "Ashely",
     "lastName": "Weaver",
-    "email": "com",
+    "email": "1111@ssss.com",
     "favoriteColor": "Brown",
     "birthday": "06-19-2000",
     "admin": "false"
@@ -43,7 +43,7 @@ content-Type: application/json
 }
 
 ### Edit contact
-PUT http://localhost:3000/ship-in/67df56723f3a744c7e3fa8dd HTTP/1.1
+PUT http://localhost:3000/ship-in/67df6d547dc48dd3aef2c4b2 HTTP/1.1
 content-Type: application/json
 
 {
