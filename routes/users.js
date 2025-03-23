@@ -1,21 +1,22 @@
 const router = require('express').Router();
 const userController = require('../controllers/usersCon');
-const errorHandler = require('../errors/errorHandler');
+const validation = require('../utils/validate');
+
 
 // Get all users
-router.get('/', errorHandler.asyncHandler(userController.getAll));
+router.get('/', userController.getAll);
 
 //Get one user by ID
-router.get('/:id', errorHandler.asyncHandler(userController.getById));
+router.get('/:id', userController.getById);
 
 //Post user
-router.post('/', errorHandler.asyncHandler(userController.createUser));
+router.post('/', validation.saveContact, userController.createUser);
 
 //Edit user
-router.put('/:id', errorHandler.asyncHandler(userController.editUser));
+router.put('/:id', validation.saveContact, userController.editUser);
 
 //Delete user
-router.delete('/:id', errorHandler.asyncHandler(userController.deleteUser));
+router.delete('/:id', userController.deleteUser);
 
 
 module.exports = router;

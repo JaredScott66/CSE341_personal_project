@@ -6,7 +6,7 @@ const doc = {
         description: 'A cargoship registering API for use on starbases'
     },
     host: 'localhost:3000',
-    schemes: ['https'],
+    schemes: ['http'],
 };
 
 const outputFile = './swagger.json';

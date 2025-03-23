@@ -1,8 +1,9 @@
 const mongodb = require('../db/database');
 const ObjectId = require('mongodb').ObjectId;
+const {Api404Error, Api400Error, Api500Error} = require('../errors/apiErrorObjects');
+const errorTools = require('../errors/errorHandler');
 
-
-const getAll = async (req, res) => {
+const getAll = async (req, res, next) => {
     try {
         //#swagger.tags=['Users']
         const result = await mongodb.getDatabase().db().collection("users").find();
@@ -11,23 +12,35 @@ const getAll = async (req, res) => {
                 res.setHeader('Content-type', 'applications/json');
                 res.status(200).json(users);
             })
+            if (!result) {
+                throw new Api404Error('No user found')
+            }
         } catch (error) {
-            console.error(error);
+            errorTools.logError(error)
+            next()
         }
 };
 
-const getById = async (req, res) => {
-    //#swagger.tags=['Users']
-    const userId = new ObjectId(req.params.id);
-    const result = await mongodb.getDatabase().db().collection("users").find({_id:userId});
-    result.toArray()
-    .then((users) => {
-        res.setHeader('Content-type', 'applications/json');
-        res.status(200).json(users);
-    });
+const getById = async (req, res, next) => {
+    try {
+        //#swagger.tags=['Users']
+        const userId = new ObjectId(req.params.id);
+        const result = await mongodb.getDatabase().db().collection("users").find({_id:userId});
+        result.toArray()
+        .then((users) => {
+            res.setHeader('Content-type', 'applications/json');
+            res.status(200).json(users);
+        });
+        if (!result) {
+            throw new Api404Error('No user found')
+        }
+    } catch (error) {
+        errorTools.logError(error)
+        next()
+    }
 };
 
-const createUser = async (req, res) => {
+const createUser = async (req, res, next) => {
     try {
     //#swagger.tags=['Users']
     const user = {
@@ -45,10 +58,11 @@ const createUser = async (req, res) => {
     } catch (error) {
         res.status(500).json(response.error || 'Some error occured while updating user.');
         console.error(error)
+        next(error)
     };
 }
 
-const editUser = async (req, res) => {
+const editUser = async (req, res, next) => {
     try {
     //#swagger.tags=['Users']
     const userId = new ObjectId(req.params.id);
@@ -67,12 +81,12 @@ const editUser = async (req, res) => {
          res.status(500).json(response.error || 'Some error occured while updating user.');
      };
     } catch (error) {
-        res.status(500).json(response.error || 'Some error occured while updating user.');
         console.error(error)
+        next(error);
     };
 }
 
-const deleteUser = async (req, res) => {
+const deleteUser = async (req, res, next) => {
     try {
     //#swagger.tags=['Users']
     const userId = new ObjectId(req.params.id);
@@ -84,6 +98,7 @@ const deleteUser = async (req, res) => {
     };
     } catch (error) {
         console.error(error)
+        next(error)
     };
 };
 

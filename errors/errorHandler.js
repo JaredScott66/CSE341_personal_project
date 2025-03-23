@@ -13,5 +13,31 @@ const asyncHandler = (fn) => (req, res, next) => {
     Promise.resolve(fn(req, res, next)).catch(next);
 };
 
+const logError = (err) => {
+    console.error(err)
+};
 
-module.exports = {errorHandler, asyncHandler};
+const logErrorMiddleWare = (err, req, res, next) => {
+    logError(err);
+    next(err)
+};
+
+const returnError = (err, req, res, next) => {
+    res.status(err.statusCode || 500).send(err.message);
+};
+
+const isOperationalError = (error) => {
+    if (error instanceof BassError) {
+        return error.isOperational
+    }
+    return false;
+}
+
+module.exports = {
+    errorHandler, 
+    asyncHandler,
+    logError,
+    logErrorMiddleWare,
+    returnError,
+    isOperationalError
+};

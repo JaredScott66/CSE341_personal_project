@@ -19,3 +19,41 @@ content-Type: application/json
 
 ### Delete contact
 DELETE http://localhost:3000/users/67deeb8bf0b9d61a7cf3b290 HTTP/1.1
+
+
+
+
+### GET all call
+GET http://localhost:3000/ship-in HTTP/1.1
+
+### GET one call
+GET http://localhost:3000/ship-in/67df56723f3a744c7e3fa8dd HTTP/1.1
+
+### Create contact
+POST http://localhost:3000/ship-in HTTP/1.1
+content-Type: application/json
+
+{
+    "shipName": "Falcon",
+    "transponderId": "2242",
+    "weight": "800 Tons",
+    "portOrigin": "Mustafar",
+    "licenceIssued": "true",
+    "inspected": "false"
+}
+
+### Edit contact
+PUT http://localhost:3000/ship-in/67df56723f3a744c7e3fa8dd HTTP/1.1
+content-Type: application/json
+
+{
+    "shipName": "req.body.shipName",
+    "transponderId": "req.body.transponderId",
+    "weight": "req.body.weight",
+    "portOrigin": "req.body.portOrigin",
+    "licenceIssued": "req.body.licenceIssued",
+    "inspected": "req.bo"
+}
+
+### Delete contact
+DELETE http://localhost:3000/ship-in/67df56723f3a744c7e3fa8dd HTTP/1.1
