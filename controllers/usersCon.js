@@ -17,6 +17,7 @@ const getAll = async (req, res, next) => {
 };
 
 const getById = async (req, res, next) => {
+    try {
         const userId = new ObjectId(req.params.id);
         const result = await mongodb.getDatabase().db().collection("users").find({_id:userId});
         result.toArray()
@@ -27,6 +28,9 @@ const getById = async (req, res, next) => {
         if (!result) {
             throw new Api500Error('No user found')
         }
+    } catch (error) {
+        next(error)
+    }
 
 };
 

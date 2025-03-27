@@ -85,8 +85,8 @@
           "204": {
             "description": "No Content"
           },
-          "412": {
-            "description": "Precondition Failed"
+          "400": {
+            "description": "Bad Request"
           },
           "500": {
             "description": "Internal Server Error"
@@ -100,6 +100,9 @@
           "Users"
         ],
         "description": "",
+        "produces": [
+          "applications/json"
+        ],
         "parameters": [
           {
             "name": "id",
@@ -109,8 +112,8 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "OK"
           }
         }
       },
@@ -158,8 +161,8 @@
           "204": {
             "description": "No Content"
           },
-          "412": {
-            "description": "Precondition Failed"
+          "400": {
+            "description": "Bad Request"
           },
           "500": {
             "description": "Internal Server Error"
