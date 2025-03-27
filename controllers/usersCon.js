@@ -31,40 +31,48 @@ const getById = async (req, res, next) => {
 };
 
 const createUser = async (req, res, next) => {
-    const user = {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email,
-        favoriteColor: req.body.favoriteColor,
-        birthday: req.body.birthday,
-        admin: req.body.admin 
-     };
-     const response = await mongodb.getDatabase().db().collection("users").insertOne(user);
-     if (response.acknowledged) {
-         res.status(204).send();
-    } else {
-        res.status(500).json(response.error || 'Some error occured while updating user.');
-        throw new Api400Error
+    try {
+        const user = {
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            email: req.body.email,
+            favoriteColor: req.body.favoriteColor,
+            birthday: req.body.birthday,
+            admin: req.body.admin 
+        };
+        const response = await mongodb.getDatabase().db().collection("users").insertOne(user);
+        if (response.acknowledged) {
+            res.status(204).send();
+        } else {
+            res.status(500).json(response.error || 'Some error occured while updating user.');
+            throw new Api400Error
+        }
+    } catch (error) {
+        next(error)
     }
 }
 
 const editUser = async (req, res, next) => {
-    const userId = new ObjectId(req.params.id);
-    const user = {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email,
-        favoriteColor: req.body.favoriteColor,
-        birthday: req.body.birthday,
-        admin: req.body.admin 
-     };
-     const response = await mongodb.getDatabase().db().collection("users").replaceOne({_id:userId}, user);
-     if (response.acknowledged) {
-         res.status(204).send();
-        } else {
-            res.status(500).json(response.error || 'Some error occured while updating user.');
-            throw new Api500Error
-     };
+    try {
+        const userId = new ObjectId(req.params.id);
+        const user = {
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            email: req.body.email,
+            favoriteColor: req.body.favoriteColor,
+            birthday: req.body.birthday,
+            admin: req.body.admin 
+        };
+        const response = await mongodb.getDatabase().db().collection("users").replaceOne({_id:userId}, user);
+        if (response.acknowledged) {
+            res.status(204).send();
+            } else {
+                res.status(500).json(response.error || 'Some error occured while updating user.');
+                throw new Api500Error
+            } 
+    } catch (error) {
+        next(error)
+    };
 
 }
 

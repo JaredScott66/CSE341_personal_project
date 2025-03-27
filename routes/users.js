@@ -17,12 +17,12 @@ router.get('/:id',
 //Post user
 router.post('/', 
         //#swagger.tags=['Users']
-    validation.saveContact, errorH(userController.createUser));
+    validation.saveContact, userController.createUser);
 
 //Edit user
 router.put('/:id', 
         //#swagger.tags=['Users']
-    validation.saveContact, errorH(userController.editUser));
+    validation.saveContact, userController.editUser);
 
 //Delete user
 router.delete('/:id', 
