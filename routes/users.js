@@ -12,7 +12,7 @@ router.get('/',
 //Get one user by ID
 router.get('/:id',
         //#swagger.tags=['Users']
-    validation.checkIdString, errorH(userController.getById));
+     errorH(userController.getById));
 
 //Post user
 router.post('/', 
