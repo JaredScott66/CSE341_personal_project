@@ -24,9 +24,15 @@ app.use('/', routes);
 app.use(errorHandler);
 
 
+// process.on('uncaughtException', (error, origin) => {
+//     console.log(process.stderr.fd, `Caught exeption: ${error}\n` + ` Exeption origin: ${origin}`);
+// })
+
 process.on('uncaughtException', (error, origin) => {
-    console.log(process.stderr.fd, `Caught exeption: ${error}\n` + ` Exeption origin: ${origin}`);
-})
+    console.error(`Caught exception: ${error.message}\nException origin: ${origin}`);
+    process.exit(1); // Exit the process to prevent unpredictable behavior
+});
+
 
 
 mongodb.initDb((err) => {
@@ -34,7 +40,7 @@ mongodb.initDb((err) => {
         console.log(err)
     } else {
         app.listen(port, () => {
-            console.log(`Database is listening and node is runnining on port ${port}`);
+            console.log(`Database is listening and node is running on port ${port}`);
         })
     }
 })

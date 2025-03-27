@@ -12,6 +12,19 @@
     "https"
   ],
   "paths": {
+    "/": {
+      "get": {
+        "tags": [
+          "Hello world"
+        ],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api-docs": {
       "get": {
         "description": "",
@@ -28,12 +41,9 @@
           "Users"
         ],
         "description": "",
-        "produces": [
-          "applications/json"
-        ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": ""
           }
         }
       },
@@ -42,44 +52,9 @@
           "Users"
         ],
         "description": "",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "firstName": {
-                  "example": "any"
-                },
-                "lastName": {
-                  "example": "any"
-                },
-                "email": {
-                  "example": "any"
-                },
-                "favoriteColor": {
-                  "example": "any"
-                },
-                "birthday": {
-                  "example": "any"
-                },
-                "admin": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
         "responses": {
-          "204": {
-            "description": "No Content"
-          },
           "412": {
             "description": "Precondition Failed"
-          },
-          "500": {
-            "description": "Internal Server Error"
           }
         }
       }
@@ -90,9 +65,6 @@
           "Users"
         ],
         "description": "",
-        "produces": [
-          "applications/json"
-        ],
         "parameters": [
           {
             "name": "id",
@@ -102,8 +74,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "412": {
+            "description": "Precondition Failed"
           }
         }
       },
@@ -118,44 +90,11 @@
             "in": "path",
             "required": true,
             "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "firstName": {
-                  "example": "any"
-                },
-                "lastName": {
-                  "example": "any"
-                },
-                "email": {
-                  "example": "any"
-                },
-                "favoriteColor": {
-                  "example": "any"
-                },
-                "birthday": {
-                  "example": "any"
-                },
-                "admin": {
-                  "example": "any"
-                }
-              }
-            }
           }
         ],
         "responses": {
-          "204": {
-            "description": "No Content"
-          },
           "412": {
             "description": "Precondition Failed"
-          },
-          "500": {
-            "description": "Internal Server Error"
           }
         }
       },
@@ -173,11 +112,18 @@
           }
         ],
         "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "500": {
-            "description": "Internal Server Error"
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/users/api-docs": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
           }
         }
       }
@@ -268,7 +214,9 @@
         }
       },
       "put": {
-        "tags": [],
+        "tags": [
+          "Ships"
+        ],
         "description": "",
         "parameters": [
           {
@@ -276,11 +224,44 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "shipName": {
+                  "example": "any"
+                },
+                "transponderId": {
+                  "example": "any"
+                },
+                "weight": {
+                  "example": "any"
+                },
+                "portOrigin": {
+                  "example": "any"
+                },
+                "licenceIssued": {
+                  "example": "any"
+                },
+                "inspected": {
+                  "example": "any"
+                }
+              }
+            }
           }
         ],
         "responses": {
+          "204": {
+            "description": "No Content"
+          },
           "412": {
             "description": "Precondition Failed"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       },

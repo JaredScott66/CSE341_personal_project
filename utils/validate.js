@@ -43,7 +43,20 @@ const saveShip = (req, res, next) => {
   });
 };
 
+const checkIdString = (req, res, next) => {
+  const response = req.params.id;
+  if (response.length != 25) {
+    res.status(412).send({
+      success: false,
+      error: 'Id is not valid input',
+  });
+  } else {
+    next()
+  }
+};
+
 module.exports = {
   saveContact,
-  saveShip
+  saveShip,
+  checkIdString
 };

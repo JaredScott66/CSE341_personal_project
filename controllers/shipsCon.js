@@ -3,7 +3,6 @@ const ObjectId = require('mongodb').ObjectId;
 
 
 const getAll = async (req, res) => {
-    //#swagger.tags=['Ships']
     try {
         const result = await mongodb.getDatabase().db().collection("traffic-intake").find();
             result.toArray()
@@ -17,7 +16,6 @@ const getAll = async (req, res) => {
 };
 
 const getById = async (req, res, next) => {
-    //#swagger.tags=['Ships']
     try {
         const userId = new ObjectId(req.params.id);
         const result = await mongodb.getDatabase().db().collection("traffic-intake").find({_id:userId});
@@ -32,60 +30,57 @@ const getById = async (req, res, next) => {
 };
 
 const createShip = async (req, res, next) => {
-    //#swagger.tags=['Ships']
     try {
-    const ship = {
-        shipName: req.body.shipName,
-        transponderId: req.body.transponderId,
-        weight: req.body.weight,
-        portOrigin: req.body.portOrigin,
-        licenceIssued: req.body.licenceIssued,
-        inspected: req.body.inspected 
-     };
-     const response = await mongodb.getDatabase().db().collection("traffic-intake").insertOne(ship);
-     if (response.acknowledged) {
-         res.status(204).send();
-     } else {
-         res.status(500).json(response.error || 'Some error occured while updating user.');
-     };
+        const ship = {
+            shipName: req.body.shipName,
+            transponderId: req.body.transponderId,
+            weight: req.body.weight,
+            portOrigin: req.body.portOrigin,
+            licenceIssued: req.body.licenceIssued,
+            inspected: req.body.inspected 
+        };
+        const response = await mongodb.getDatabase().db().collection("traffic-intake").insertOne(ship);
+        if (response.acknowledged) {
+            res.status(204).send();
+        } else {
+            res.status(500).json(response.error || 'Some error occured while updating user.');
+        };
     } catch (error) {
         next(error)
     };
 }
 
 const editShip = async (req, res, next) => {
-    //#swagger.tags=[Ships']
     try {
-    const shipId = new ObjectId(req.params.id);
-    const ship = {
-        shipName: req.body.shipName,
-        transponderId: req.body.transponderId,
-        weight: req.body.weight,
-        portOrigin: req.body.portOrigin,
-        licenceIssued: req.body.licenceIssued,
-        inspected: req.body.inspected 
-     };
-     const response = await mongodb.getDatabase().db().collection("traffic-intake").replaceOne({_id:shipId}, ship);
-     if (response.acknowledged) {
-         res.status(204).send();
-     } else {
-         res.status(500).json(response.error || 'Some error occured while updating user.');
-     };
+        const shipId = new ObjectId(req.params.id);
+        const ship = {
+            shipName: req.body.shipName,
+            transponderId: req.body.transponderId,
+            weight: req.body.weight,
+            portOrigin: req.body.portOrigin,
+            licenceIssued: req.body.licenceIssued,
+            inspected: req.body.inspected 
+        };
+        const response = await mongodb.getDatabase().db().collection("traffic-intake").replaceOne({_id:shipId}, ship);
+        if (response.acknowledged) {
+            res.status(204).send();
+        } else {
+            res.status(500).json(response.error || 'Some error occured while updating user.');
+        };
     } catch (error) {
         next(error)
     };
 }
 
 const deleteShip = async (req, res) => {
-    //#swagger.tags=['Ships']
     try {
-    const shipId = new ObjectId(req.params.id);
-    const response = await mongodb.getDatabase().db().collection('traffic-intake').deleteOne({_id:shipId});
-    if (response.deletedCount > 0) {
-        res.status(204).send();
-    } else {
-        res.status(500).json(response.error || 'Some error occured while deleting the user')
-    };
+        const shipId = new ObjectId(req.params.id);
+        const response = await mongodb.getDatabase().db().collection('traffic-intake').deleteOne({_id:shipId});
+        if (response.deletedCount > 0) {
+            res.status(204).send();
+        } else {
+            res.status(500).json(response.error || 'Some error occured while deleting the user')
+        };
     } catch (error) {
         next(error);
     };

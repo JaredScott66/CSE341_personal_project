@@ -4,8 +4,6 @@ const {Api404Error, Api400Error, Api500Error} = require('../errors/apiErrorObjec
 const errorTools = require('../errors/errorHandler');
 
 const getAll = async (req, res, next) => {
-    try {
-        //#swagger.tags=['Users']
         const result = await mongodb.getDatabase().db().collection("users").find();
             result.toArray()
             .then((users) => {
@@ -15,14 +13,10 @@ const getAll = async (req, res, next) => {
             if (!result) {
                 throw new Api404Error('No user found')
             }
-        } catch (error) {
-            next(error)
-        }
+
 };
 
 const getById = async (req, res, next) => {
-    try {
-        //#swagger.tags=['Users']
         const userId = new ObjectId(req.params.id);
         const result = await mongodb.getDatabase().db().collection("users").find({_id:userId});
         result.toArray()
@@ -31,16 +25,12 @@ const getById = async (req, res, next) => {
             res.status(200).json(users);
         });
         if (!result) {
-            throw new Api404Error('No user found')
+            throw new Api500Error('No user found')
         }
-    } catch (error) {
-        next(error)
-    }
+
 };
 
 const createUser = async (req, res, next) => {
-    try {
-    //#swagger.tags=['Users']
     const user = {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
@@ -52,17 +42,12 @@ const createUser = async (req, res, next) => {
      const response = await mongodb.getDatabase().db().collection("users").insertOne(user);
      if (response.acknowledged) {
          res.status(204).send();
-     } 
-    } catch (error) {
-        res.status(500).json(response.error || 'Some error occured while updating user.');
-        console.error(error)
-        next(error)
-    };
+    } else {
+        throw new Api400Error
+    }
 }
 
 const editUser = async (req, res, next) => {
-    try {
-    //#swagger.tags=['Users']
     const userId = new ObjectId(req.params.id);
     const user = {
         firstName: req.body.firstName,
@@ -73,28 +58,27 @@ const editUser = async (req, res, next) => {
         admin: req.body.admin 
      };
      const response = await mongodb.getDatabase().db().collection("users").replaceOne({_id:userId}, user);
-     if (response.acknowledged) {
-         res.status(204).send();
-     } else {
+     if (!response.acknowledged) {
          res.status(500).json(response.error || 'Some error occured while updating user.');
+         throw new Api500Error
+        } else {
+         res.status(204).send();
      };
-    } catch (error) {
-        next(error);
-    };
+
 }
 
 const deleteUser = async (req, res, next) => {
-    try {
-    //#swagger.tags=['Users']
     const userId = new ObjectId(req.params.id);
     const response = await mongodb.getDatabase().db().collection('users').deleteOne({_id:userId});
-    if (response.deletedCount > 0) {
-        res.status(204).send();
+    if (!response.deletedCount > 0) {
+        res.status(400).json(response.error || 'Some error occured while deleting the user')
+        throw new Api400Error
+        
     } else {
-        res.status(500).json(response.error || 'Some error occured while deleting the user')
-    };
-    } catch (error) {
-        next(error)
+        res.status(204).send({
+            Success: true,
+            message: 'User was deleted'
+        });
     };
 };
 
