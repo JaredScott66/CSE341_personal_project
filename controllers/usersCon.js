@@ -4,6 +4,7 @@ const {Api404Error, Api400Error, Api500Error} = require('../errors/apiErrorObjec
 const errorTools = require('../errors/errorHandler');
 
 const getAll = async (req, res, next) => {
+    try {
         const result = await mongodb.getDatabase().db().collection("users").find();
             result.toArray()
             .then((users) => {
@@ -13,7 +14,9 @@ const getAll = async (req, res, next) => {
             if (!result) {
                 throw new Api404Error('No user found')
             }
-
+    } catch (error) {
+        next(error)
+    }
 };
 
 const getById = async (req, res, next) => {
