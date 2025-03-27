@@ -5,8 +5,8 @@ const doc = {
         title: 'Cargo registry API',
         description: 'A cargoship registering API for use on starbases'
     },
-    host: process.env.RENDER_EXTERNAL_HOSTNAME || 'localhost:3000',
-    schemes: process.env.RENDER_EXTERNAL_HOSTNAME ? ['https'] : ['http']
+    host: 'localhost:3000',
+    schemes: ['http', 'https'],
 };
 
 const outputFile = './swagger.json';
