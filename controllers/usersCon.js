@@ -43,6 +43,7 @@ const createUser = async (req, res, next) => {
      if (response.acknowledged) {
          res.status(204).send();
     } else {
+        res.status(500).json(response.error || 'Some error occured while updating user.');
         throw new Api400Error
     }
 }
@@ -58,11 +59,11 @@ const editUser = async (req, res, next) => {
         admin: req.body.admin 
      };
      const response = await mongodb.getDatabase().db().collection("users").replaceOne({_id:userId}, user);
-     if (!response.acknowledged) {
-         res.status(500).json(response.error || 'Some error occured while updating user.');
-         throw new Api500Error
-        } else {
+     if (response.acknowledged) {
          res.status(204).send();
+        } else {
+            res.status(500).json(response.error || 'Some error occured while updating user.');
+            throw new Api500Error
      };
 
 }
