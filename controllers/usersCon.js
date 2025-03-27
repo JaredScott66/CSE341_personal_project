@@ -46,7 +46,7 @@ const createUser = async (req, res, next) => {
         };
         const response = await mongodb.getDatabase().db().collection("users").insertOne(user);
         if (response.acknowledged) {
-            res.status(204).send();
+            res.status(200).json('User was Created');
         } else {
             res.status(500).json(response.error || 'Some error occured while updating user.');
             throw new Api400Error
@@ -69,7 +69,7 @@ const editUser = async (req, res, next) => {
         };
         const response = await mongodb.getDatabase().db().collection("users").replaceOne({_id:userId}, user);
         if (response.acknowledged) {
-            res.status(204).send();
+            res.status(200).json('User was Edited');
             } else {
                 res.status(500).json(response.error || 'Some error occured while updating user.');
                 throw new Api500Error

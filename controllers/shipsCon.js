@@ -41,7 +41,7 @@ const createShip = async (req, res, next) => {
         };
         const response = await mongodb.getDatabase().db().collection("traffic-intake").insertOne(ship);
         if (response.acknowledged) {
-            res.status(204).send();
+            res.status(200).json('Ship was created');
         } else {
             res.status(500).json(response.error || 'Some error occured while updating user.');
         };
@@ -63,7 +63,7 @@ const editShip = async (req, res, next) => {
         };
         const response = await mongodb.getDatabase().db().collection("traffic-intake").replaceOne({_id:shipId}, ship);
         if (response.acknowledged) {
-            res.status(204).send();
+            res.status(200).json('Ship was changed');
         } else {
             res.status(500).json(response.error || 'Some error occured while updating user.');
         };
@@ -72,14 +72,14 @@ const editShip = async (req, res, next) => {
     };
 }
 
-const deleteShip = async (req, res) => {
+const deleteShip = async (req, res, next) => {
     try {
         const shipId = new ObjectId(req.params.id);
         const response = await mongodb.getDatabase().db().collection('traffic-intake').deleteOne({_id:shipId});
         if (response.deletedCount > 0) {
-            res.status(204).send();
+            res.status(200).json('Ship was deleted');
         } else {
-            res.status(500).json(response.error || 'Some error occured while deleting the user')
+            res.status(500).json(response.error || 'Some error occured while deleting the ship')
         };
     } catch (error) {
         next(error);
