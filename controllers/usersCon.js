@@ -81,18 +81,18 @@ const editUser = async (req, res, next) => {
 }
 
 const deleteUser = async (req, res, next) => {
-    const userId = new ObjectId(req.params.id);
-    const response = await mongodb.getDatabase().db().collection('users').deleteOne({_id:userId});
-    if (!response.deletedCount > 0) {
-        res.status(400).json(response.error || 'Some error occured while deleting the user')
-        throw new Api400Error
-        
-    } else {
-        res.status(204).send({
-            Success: true,
-            message: 'User was deleted'
-        });
-    };
+    try {
+        const userId = new ObjectId(req.params.id);
+        const response = await mongodb.getDatabase().db().collection('users').deleteOne({_id:userId});
+        if (response.deletedCount > 0) {
+            res.status(200).json('User was Deleted');
+        } else {
+            res.status(400).json(response.error || 'Some error occured while deleting the user')
+            throw new Api400Error
+        };
+    } catch (error) {
+        next(error)
+    }
 };
 
 module.exports = {

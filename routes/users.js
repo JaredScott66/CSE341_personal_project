@@ -27,7 +27,7 @@ router.put('/:id',
 //Delete user
 router.delete('/:id', 
         //#swagger.tags=['Users']
-    errorH(userController.deleteUser));
+    userController.deleteUser);
 
 
 module.exports = router;
