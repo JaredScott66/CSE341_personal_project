@@ -1,13 +1,14 @@
 const router = require('express').Router();
 const userController = require('../controllers/usersCon');
-const validation = require('../utils/validate');
-const errorH = require('../errors/errorHandler').asyncHandler
-
+const validation = require('../middleware/validate');
+const errorH = require('../errors/errorHandler').asyncHandler;
+const { isAuthenticated } = require('../middleware/authenticate');
+ 
 router.use('/', require('./swagger'));
 // Get all users
 router.get('/', 
         //#swagger.tags=['Users']
-    errorH(userController.getAll));
+    userController.getAll);
 
 //Get one user by ID
 router.get('/:id',
@@ -15,17 +16,17 @@ router.get('/:id',
     userController.getById);
 
 //Post user
-router.post('/', 
+router.post('/', isAuthenticated,
         //#swagger.tags=['Users']
     validation.saveContact, userController.createUser);
 
 //Edit user
-router.put('/:id', 
+router.put('/:id', isAuthenticated,
         //#swagger.tags=['Users']
     validation.saveContact, userController.editUser);
 
 //Delete user
-router.delete('/:id', 
+router.delete('/:id', isAuthenticated,
         //#swagger.tags=['Users']
     userController.deleteUser);
 

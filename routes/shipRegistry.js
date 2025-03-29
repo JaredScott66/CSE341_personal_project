@@ -1,7 +1,8 @@
 const router = require('express').Router();
 const shipController = require('../controllers/shipsCon');
 const errorHandler = require('../errors/errorHandler');
-const validation = require('../utils/validate');
+const validation = require('../middleware/validate');
+const { isAuthenticated } = require('../middleware/authenticate');
 
 // Get all ships
 router.get('/', 
@@ -14,17 +15,17 @@ router.get('/:id',
     shipController.getById);
 
 //Post ship
-router.post('/', 
+router.post('/', isAuthenticated,
         //#swagger.tags=['Ships']
     validation.saveShip, shipController.createShip);
 
 //Edit ship
-router.put('/:id', 
+router.put('/:id', isAuthenticated,
         //#swagger.tags=['Ships']
     validation.saveShip, shipController.editShip);
 
-//Delete ship
-router.delete('/:id', 
+//Delete ship 
+router.delete('/:id', isAuthenticated,
         //#swagger.tags=['Ships']
     shipController.deleteShip);
 
