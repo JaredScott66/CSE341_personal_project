@@ -8,8 +8,8 @@
   "host": "cse341-personal-project-zpvh.onrender.com",
   "basePath": "/",
   "schemes": [
-    "https",
-    "http"
+    "http",
+    "https"
   ],
   "paths": {
     "/": {
@@ -278,6 +278,9 @@
                 },
                 "inspected": {
                   "example": "any"
+                },
+                "destination": {
+                  "example": "any"
                 }
               }
             }
@@ -356,6 +359,9 @@
                   "example": "any"
                 },
                 "inspected": {
+                  "example": "any"
+                },
+                "destination": {
                   "example": "any"
                 }
               }

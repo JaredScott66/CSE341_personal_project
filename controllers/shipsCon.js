@@ -37,7 +37,8 @@ const createShip = async (req, res, next) => {
             weight: req.body.weight,
             portOrigin: req.body.portOrigin,
             licenceIssued: req.body.licenceIssued,
-            inspected: req.body.inspected 
+            inspected: req.body.inspected,
+            destination: req.body.destination
         };
         const response = await mongodb.getDatabase().db().collection("traffic-intake").insertOne(ship);
         if (response.acknowledged) {
@@ -59,7 +60,8 @@ const editShip = async (req, res, next) => {
             weight: req.body.weight,
             portOrigin: req.body.portOrigin,
             licenceIssued: req.body.licenceIssued,
-            inspected: req.body.inspected 
+            inspected: req.body.inspected,
+            destination: req.body.destination 
         };
         const response = await mongodb.getDatabase().db().collection("traffic-intake").replaceOne({_id:shipId}, ship);
         if (response.acknowledged) {

@@ -29,7 +29,8 @@ const saveShip = (req, res, next) => {
     weight: 'required|string',
     portOrigin: 'required|string',
     licenceIssued: 'required|string',
-    inspected: 'required|string'
+    inspected: 'required|string',
+    destination: 'required|string'
   };
   validator(req.body, validationRule, {}, (err, status) => {
     if (!status) {
